@@ -40,6 +40,7 @@ Het model rekent met getallen, niet met letters. Een **tokenizer** knipt tekst d
 
 - Veelvoorkomende Engelse woorden zijn vaak één token: `the`, `model`.
 - Zeldzame woorden, Nederlands, code en getallen worden in meer stukjes geknipt. Ter illustratie (de precieze knippen verschillen per tokenizer): `kalibratie` → `kal` · `ib` · `ratie`.
+- Echte meting met `qwen3.5:9b`: het antwoord `hallo` kwam gestreamd binnen als `hal` + `lo`, plus het stop-token: `eval_count: 3` (zie les 02).
 - Spaties en leestekens tellen mee, vaak als deel van een token.
 
 Vuistregel voor Engels: één token ≈ 4 tekens ≈ ¾ woord. Nederlands kost doorgaans meer tokens per woord. Dat is een vuistregel, geen meting; tellen doe je met `prompt_eval_count`.

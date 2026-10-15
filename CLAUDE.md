@@ -41,7 +41,7 @@ Bij een nieuw onderwerp schrijf je een les als bestand `notes/NN-onderwerp.md` (
 
 Opbouw van elke les, in deze volgorde:
 
-1. **Wat je al weet** — 1–3 zinnen: welke eerdere lessen de basis zijn (met bestandsnaam).
+1. **Inleiding** — rustig en in gewone taal: waar we zijn op de kaart van het project (met een eenvoudig schema als dat helpt), wat je al weet (met bestandsnaam), waarom dit onderwerp nu komt, wat je na deze les kunt (2–4 punten) en welke nieuwe begrippen erin voorkomen.
 2. **Het probleem** — wat gaat er mis of ontbreekt zonder dit? Liefst met een concreet geval.
 3. **Het idee in het kort** — de kern in één alinea, nog zonder details.
 4. **Hoe het werkt, stap voor stap** — genummerde stappen. Elke stap gebruikt alleen wat eerder is uitgelegd; een nieuw begrip leg je uit waar het voor het eerst opduikt. Waar het helpt een klein voorbeeld: echte getallen, of een paar regels code mét de output.
@@ -53,6 +53,8 @@ Opbouw van elke les, in deze volgorde:
 
 Regels:
 - **Niets overslaan.** Liever één tussenstap te veel dan één te weinig. Een extra fundament benoem je in één zin; ik kies of er een les over komt.
+- **Rustig tempo:** hooguit 3–4 nieuwe begrippen per les(deel); zijn het er meer, splits de les. Elk begrip eerst in gewone taal en met een voorbeeld, daarna pas de vakterm.
+- **Python hoort bij het bouwen:** nieuwe Python-constructies leg je uit in de bouwstap waar ze voor het eerst nodig zijn (§4), niet in de les.
 - **Omvang:** 10–15 minuten lezen. Groter onderwerp: splits in delen (`03a`, `03b`); het volgende deel schrijf je als ik "door" zeg.
 - **Voortbouwen, niet herhalen:** verwijs naar een eerdere les. Een bekend onderwerp in een nieuwe context (bijv. tool calling op vLLM in plaats van Ollama) krijgt alleen een korte uitleg van wat anders is.
 - **Vervolgvragen** beantwoord je in de chat. Hoort het antwoord in de les, werk de les bij en zeg welk stuk.
@@ -62,10 +64,10 @@ Regels:
 
 1. **Les** (§3). Wacht tot ik vragen stel of "door" zeg.
 2. **Bouwplan:** 3–7 genummerde stappen: wat bouwen we, welke bestanden, hoe ziet het resultaat eruit, hoe testen we het. Wacht op mijn akkoord.
-3. **Bouwen**, één stap uit het plan per beurt: één functie, één klein bestand of één smalle stap van begin tot eind. Elke wijziging moet ik in de diff kunnen lezen. Per stap:
+3. **Bouwen**, één stap uit het plan per beurt: één functie, één klein bestand of één smalle stap van begin tot eind. Elke wijziging moet ik in de diff kunnen lezen. Eén nieuw idee per stap. Per stap:
    - wat dit stuk doet en waarom zo;
    - de code, met uitleg per blok van een paar regels;
-   - een Python-constructie die ik nog niet ken (dataclass, context manager, generator, async ...) leg je bij het eerste gebruik in twee of drie zinnen uit;
+   - een Python-constructie die ik nog niet ken (dataclass, context manager, generator, async ...) leg je bij het eerste gebruik uit, met een klein los voorbeeld; hooguit één nieuwe constructie per stap, anders splits je de stap;
    - hoe ik het draai en wat ik hoor te zien; scheid wat je verwacht van wat pas na draaien vaststaat;
    - 1–3 speelopdrachten (hieronder);
    - waar we staan ("stap 3 van 6").
@@ -74,7 +76,7 @@ Regels:
 4. **Draaien en meten.** Ik draai het. Bij een wijziging aan de pipeline meten we vóór en na met dezelfde evaluatieset.
 5. **Commit.** Stel een commitbericht voor en commit na mijn akkoord.
 
-**Speelopdrachten:** oplopend: een waarde veranderen → gedrag veranderen → een klein stuk toevoegen.
+**Speelopdrachten:** oplopend: een waarde veranderen → gedrag veranderen → een klein stuk toevoegen. Bij een nieuw onderwerp begin je met één; later mogen het er meer zijn.
 - Noem wat ik verander en waar ik op let, niet wat er gaat gebeuren. De verklaring volgt als ik de output plak of "waarom?" vraag; bij "uitleg" meteen.
 - Altijd optioneel: sla ik ze over, dan gaan we door.
 
@@ -154,7 +156,7 @@ Elk project begint met de simpelst mogelijke versie die van begin tot eind werkt
 
 **Project 1 — RAG-engine over de vLLM-documentatie**
 - **Sprint 0 — Een LLM aanroepen en meten.**
-  Lessen: wat een LLM doet bij één aanroep (tokens, kansverdeling over het volgende token, token voor token genereren, context window) · een LLM aanroepen over HTTP (Ollama's eigen API, JSON, streaming, timeouts) · samplingknoppen (temperature, top_k, top_p, seed, num_predict) · meten met een vaste promptset · de OpenAI-compatibele API.
+  Lessen: het grote plaatje (les 00: wat bouwen we in Project 1 en waarom in deze volgorde, zonder code) · wat een LLM doet bij één aanroep (tokens, kansverdeling over het volgende token, token voor token genereren, context window) · een LLM aanroepen over HTTP (Ollama's eigen API, JSON, streaming, timeouts) · samplingknoppen (temperature, top_k, top_p, seed, num_predict) · meten met een vaste promptset · de OpenAI-compatibele API.
   Bouwen: client voor de Ollama-API; meetlat met vaste promptset en vaste seed, alle instellingen en output als JSON in `data/`; tot slot dezelfde aanroep via `/v1/chat/completions`.
   Baseline: een los LLM beantwoordt 5 vragen over de vLLM-documentatie. Waar faalt het, en waarom is RAG nodig?
 - **Sprint 1 — Dunne RAG.**

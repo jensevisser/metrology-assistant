@@ -1,6 +1,8 @@
 """Minimale client voor de Ollama HTTP API (/api/chat), zonder streaming."""
 
 import logging
+import time
+from dataclasses import dataclass
 
 import httpx
 
@@ -13,6 +15,18 @@ class LLMError(Exception):
     """Fout bij het aanroepen van het LLM: timeout, geen verbinding, HTTP-fout of onverwacht antwoord."""
 
 
+@dataclass(frozen=True)
+class ChatResult:
+    """Resultaat van één aanroep, onafhankelijk van de backend."""
+
+    content: str
+    done_reason: str | None  # "stop" = klaar, "length" = afgekapt
+    tokens_in: int | None
+    tokens_out: int | None
+    seconds: float  # gemeten door de client, van verzoek tot antwoord
+    raw: dict  # het volledige antwoord van de backend, voor logging
+
+
 def chat(
     model: str,
     messages: list[dict[str, str]],
@@ -21,8 +35,8 @@ def chat(
     timeout: float = 120.0,
     base_url: str = OLLAMA_URL,
     client: httpx.Client | None = None,
-) -> dict:
-    """Stuur messages naar Ollama en geef het volledige JSON-antwoord terug als dict.
+) -> ChatResult:
+    """Stuur messages naar Ollama en geef het antwoord terug als ChatResult.
 
     `client` is bedoeld voor tests (nep-server); normaal laat je hem leeg.
     """
@@ -34,6 +48,7 @@ def chat(
         "options": options or {},
     }
     http = client or httpx.Client(base_url=base_url, timeout=timeout)
+    start = time.perf_counter()
     try:
         response = http.post("/api/chat", json=payload)
         response.raise_for_status()
@@ -49,21 +64,26 @@ def chat(
     finally:
         if client is None:
             http.close()
+    seconds = time.perf_counter() - start
 
     message = data.get("message")
     if not isinstance(message, dict) or "content" not in message:
         raise LLMError(f"Onverwacht antwoord, geen message.content: {data}")
 
-    logger.info(
-        "model=%s tokens_in=%s tokens_uit=%s duur=%.1fs done_reason=%s",
-        model,
-        data.get("prompt_eval_count"),
-        data.get("eval_count"),
-        data.get("total_duration", 0) / 1e9,
-        data.get("done_reason"),
+    result = ChatResult(
+        content=message["content"],
+        done_reason=data.get("done_reason"),
+        tokens_in=data.get("prompt_eval_count"),
+        tokens_out=data.get("eval_count"),
+        seconds=seconds,
+        raw=data,
     )
-    if data.get("done_reason") == "length":
+    logger.info(
+        "model=%s tokens_in=%s tokens_uit=%s duur=%.2fs done_reason=%s",
+        model, result.tokens_in, result.tokens_out, result.seconds, result.done_reason,
+    )
+    if result.done_reason == "length":
         logger.warning("Antwoord afgekapt door num_predict (done_reason=length)")
     if message.get("thinking"):
         logger.warning("Model heeft gedacht ondanks think=false")
-    return data
+    return result
