@@ -74,6 +74,8 @@ Dit is les 01a letterlijk zichtbaar: elk rondje van het model wordt een eigen re
 
 Zo'n tekst met één JSON-object per regel heeft een eigen naam: **NDJSON** (*newline-delimited JSON*, JSON gescheiden door nieuwe regels).
 
+Hetzelfde formaat kom je ook tegen als **JSON Lines**, met de bestandsextensie **`.jsonl`**. NDJSON is de gangbare naam bij datastromen (Ollama stuurt de header `Content-Type: application/x-ndjson`), `.jsonl` bij bestanden. Het voordeel van zo'n bestand: je kunt er één regel achter plakken zonder de rest te herschrijven, en bij een crash is hooguit de laatste regel half. Elke regel moet wel op zichzelf compleet zijn, dus een object mag niet over meerdere regels verdeeld staan. Onze evaluatiesets worden `.jsonl`-bestanden.
+
 ### Stap 3 — Waarom `response.json()` erop vastloopt
 
 `response.json()` verwacht **één** JSON-object in de body. Het begint te lezen, vindt netjes het eerste object `{...}`, en dan staat er nóg iets: een nieuwe regel met een tweede object. Dat mag niet in één JSON-document. Vandaar de melding:
