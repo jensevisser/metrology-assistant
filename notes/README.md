@@ -7,9 +7,14 @@
 - [02b — Streaming, wachten en de koude start](02b-streaming-en-timeouts.md): waarom `stream: false`, wat een timeout is, en waarom de eerste vraag na een pauze traag is.
 - [02c — Wat er mis kan gaan, en hoe `chat()` het meldt](02c-wat-er-mis-kan-gaan.md): de foutketen van vijf schakels, het eigen fouttype `LLMError`, de oorzaak bewaren en een foutmelding van onderen lezen.
 
+# Code-rondleidingen en bouwuitleg
+
+- [`src/llm_client.py` — deel A](code/llm_client-a.md): het bestand in vogelvlucht, logging, de ingang van `chat()` (standaardwaarden en `*`), het verzoek opbouwen (`x or y`) en versturen.
+
 # Naslag
 
 Spiekbriefjes om snel iets op te zoeken, één onderwerp per bestand.
 
 - [Markdown](naslag/markdown.md): opmaak, code, lijsten, links, tabellen, en waarom iets er niet uitziet zoals bedoeld.
 - [README](naslag/readme-checklist.md): wat een sterke README bevat.
+- [Python](naslag/python.md): de Python-constructies uit dit project, met waar je ze tegenkomt. Groeit mee.

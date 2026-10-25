@@ -73,6 +73,8 @@ Regels:
    - waar we staan ("stap 3 van 6").
 
    Daarna wacht je tot ik het gedraaid heb. Kleine logische tussenstappen (een dependency toevoegen, een map aanmaken) hebben geen apart akkoord nodig.
+
+   **Waar de uitleg staat:** de uitleg van een bouwstap schrijf je in een .md-bestand in `notes/code/` (bijv. `notes/code/llm_client-c.md`), in het rustige tempo van de lessen, zodat ik hem in mijn eigen tempo lees en later terugvind. In de chat alleen: welk bestand, hoe ik het draai en wat ik hoor te zien. Code die ik nog niet ken (bijv. eerder geschreven door jou) krijgt eerst een rondleiding, blok voor blok, voordat we hem wijzigen. Nieuwe Python-constructies komen ook op `notes/naslag/python.md`.
 4. **Draaien en meten.** Ik draai het. Bij een wijziging aan de pipeline meten we vóór en na met dezelfde evaluatieset.
 5. **Commit.** Stel een commitbericht voor en commit na mijn akkoord.
 
@@ -106,7 +108,7 @@ Regels:
 - **Code:** modulair, type hints, invoervalidatie waar nuttig (bijv. Pydantic), logging in plaats van `print` in `src/`, duidelijke foutmeldingen.
 - **Tests:** `pytest` voor elke nieuwe functie in `src/`. Tests controleren het leidingwerk (parsing, foutafhandeling, timeouts, datastructuren), niet de LLM-inhoud; die meten we met de evaluatieset. Leg kort uit wat een test controleert.
 - **Git:** feature branch per onderwerp, commit per afgerond stuk. Een commitbericht zegt wat er veranderde en, bij een keuze, waarom; zo is de git-geschiedenis het logboek. Geen `Co-Authored-By`-regel. Nooit destructieve git-acties (force push, `reset --hard`, branch verwijderen) zonder te vragen.
-- **Structuur:** `src/`, `tests/`, `data/`, `eval/`, `notes/` (lessen; `notes/naslag/` voor spiekbriefjes: kort, opzoekbaar, één onderwerp per bestand), `notebooks/` (pas als nodig), plus `README.md`, `FAILURE_MODES.md` en `VOORTGANG.md`. Bestanden compact (richtlijn 50–150 regels).
+- **Structuur:** `src/`, `tests/`, `data/`, `eval/`, `notes/` (lessen; `notes/code/` voor rondleidingen en bouwuitleg; `notes/naslag/` voor spiekbriefjes: kort, opzoekbaar, één onderwerp per bestand), `notebooks/` (pas als nodig), plus `README.md`, `FAILURE_MODES.md` en `VOORTGANG.md`. Bestanden compact (richtlijn 50–150 regels).
 - **Logging** vanaf het begin. Tracing (bijv. Arize Phoenix) zodra ik uit de logs niet meer zie waarom een antwoord fout is, uiterlijk vóór de afronding van Project 1.
 - **Zware acties** (grote downloads, modellen pullen, Docker-images, training) eerst aankondigen, met verwachte grootte en VRAM/RAM-impact. Ik beslis.
 - **VRAM-tekort (OOM):** bij inference eerst `max_model_len`/contextlengte of `gpu_memory_utilization` omlaag, dan een kleiner of sterker gekwantiseerd model. Bij training: batch/grad-accum omlaag → sterker kwantiseren (8→4-bit) → lagere LoRA-rank → gradient checkpointing → kleiner model.
