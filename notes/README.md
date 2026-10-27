@@ -10,11 +10,17 @@
 # Code-rondleidingen en bouwuitleg
 
 - [`src/llm_client.py` — deel A](code/llm_client-a.md): het bestand in vogelvlucht, logging, de ingang van `chat()` (standaardwaarden en `*`), het verzoek opbouwen (`x or y`) en versturen.
+- [`src/llm_client.py` — deel B](code/llm_client-b.md): fouten opvangen (`try / except / finally`), en waar een fout naartoe gaat als niemand hem opvangt.
+- [`src/llm_client.py` — deel C](code/llm_client-c.md): fouten gooien en vertalen (`raise`, het eigen fouttype `LLMError`, `raise ... from e`), en één gat in de foutafhandeling.
+- [`src/llm_client.py` — deel D](code/llm_client-d.md): de stopwatch, de inhoud controleren, `ChatResult` met `@dataclass`, en `chat()` zelf draaien.
+
+De voorbeelden uit de rondleidingen staan als losse bestanden in [`code/voorbeelden/`](code/voorbeelden/).
 
 # Naslag
 
 Spiekbriefjes om snel iets op te zoeken, één onderwerp per bestand.
 
-- [Markdown](naslag/markdown.md): opmaak, code, lijsten, links, tabellen, en waarom iets er niet uitziet zoals bedoeld.
+- [Markdown](naslag/markdown-spiekbriefje.md): opmaak, code, lijsten, links, tabellen, en waarom iets er niet uitziet zoals bedoeld.
 - [README](naslag/readme-checklist.md): wat een sterke README bevat.
-- [Python](naslag/python.md): de Python-constructies uit dit project, met waar je ze tegenkomt. Groeit mee.
+- [Python](naslag/python-spiekbriefje.md): de Python-constructies uit dit project, met waar je ze tegenkomt. Groeit mee.
+- [Python fouten](naslag/python-fouten-spiekbriefje.md): fouten opvangen, gooien en vertalen; de stamboom van fouten.

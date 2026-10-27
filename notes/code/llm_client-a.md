@@ -31,17 +31,18 @@ Van boven naar beneden staan er vijf onderdelen:
 |---|---|---|
 | 1 | een korte beschrijving van het bestand | A |
 | 3–11 | voorbereiding: imports, de logger en het standaardadres van Ollama | A |
-| 14–15 | `LLMError`: ons eigen fouttype (les 02c) | B |
-| 18–27 | `ChatResult`: het resultaat dat `chat()` teruggeeft | B |
-| 30–89 | de functie `chat()` zelf | A (begin) en B (rest) |
+| 14–15 | `LLMError`: ons eigen fouttype (les 02c) | C |
+| 18–27 | `ChatResult`: het resultaat dat `chat()` teruggeeft | D |
+| 30–89 | de functie `chat()` zelf | A (begin), B, C en D (rest) |
 
 De functie `chat()` doet op hoofdlijnen vier dingen na elkaar:
 
 ```
   1. verzoek opbouwen          (regels 43–49)   ← deel A
   2. verzoek versturen         (regels 50–55)   ← deel A
-  3. fouten opvangen           (regels 56–71)   ← deel B
-  4. resultaat teruggeven      (regels 73–89)   ← deel B
+  3. fouten opvangen           (regels 52–66)   ← deel B
+     fouten vertalen           (regels 56–63)   ← deel C
+  4. resultaat teruggeven      (regels 67–89)   ← deel D
 ```
 
 ## 3. Blok voor blok
@@ -103,7 +104,7 @@ INFO:demo:dit is info
 WARNING:demo:dit is een waarschuwing
 ```
 
-Daarom staat `logging.basicConfig(level=logging.INFO)` straks vooraan in het commando waarmee je `chat()` uitprobeert (na deel B).
+Daarom staat `logging.basicConfig(level=logging.INFO)` straks vooraan in het commando waarmee je `chat()` uitprobeert (deel D).
 
 **Wat een module is.** In Python is elk `.py`-bestand een **module**: code die je vanuit ander Python-code kunt importeren. Bij `from src.llm_client import chat` laadt Python het bestand `src/llm_client.py`, en geeft het de naam `src.llm_client`: de `/` wordt een punt en `.py` valt weg. Dat het pad met `src.` kan beginnen, komt door het lege bestand `src/__init__.py`. Dat maakt van de map een **package**: een map met modules die bij elkaar horen.
 
@@ -160,7 +161,9 @@ meet(1, 100, 10)
 ```
 kanaal=1 bereik=10 nplc=1
 kanaal=1 bereik=100 nplc=10
-TypeError -> meet() takes from 1 to 2 positional arguments but 3 were given
+Traceback (most recent call last):
+  ...
+TypeError: meet() takes from 1 to 2 positional arguments but 3 were given
 ```
 
 De derde aanroep faalt: zonder naam weet Python niet dat `10` voor `nplc` bedoeld was, en de `*` verbiedt raden.
@@ -204,7 +207,7 @@ print(log_meting2(9.9))
 [9.9]
 ```
 
-Waarom werkt dit wel? De `def`-regel draait maar één keer, en bewaart `None` als standaard; daarop kun je niets schrijven. De regel `log = log or []` plakt de naam `log` bij elke aanroep op een **nieuw** lijstje, en de bewaarde `None` blijft `None`. Het verschil tussen een naam op een ander ding plakken (`log = ...`) en op het ding zelf schrijven (`log.append(...)`) staat uitgelegd in `../naslag/python.md`, bij "naam versus ding".
+Waarom werkt dit wel? De `def`-regel draait maar één keer, en bewaart `None` als standaard; daarop kun je niets schrijven. De regel `log = log or []` plakt de naam `log` bij elke aanroep op een **nieuw** lijstje, en de bewaarde `None` blijft `None`. Het verschil tussen een naam op een ander ding plakken (`log = ...`) en op het ding zelf schrijven (`log.append(...)`) staat uitgelegd in `../naslag/python-spiekbriefje.md`, bij "naam versus ding".
 
 Dit geldt voor alles wat je achteraf kunt veranderen: lijstjes, dicts en sets. Getallen en teksten zijn veilig als standaardwaarde (`timeout=120.0`). In `chat()` zou `options: dict = {}` nu toevallig goed gaan, omdat `chat()` `options` alleen leest. Maar voegt iemand later een regel toe als "zet altijd een seed in `options`", dan blijft die seed hangen voor alle volgende aanroepen. `None` als standaard voorkomt dat. Het nieuwe dict wordt gemaakt op regel 48.
 
@@ -262,7 +265,7 @@ Een **`httpx.Client`** is een verbinding met vaste instellingen. In les 02a gebr
 - met `base_url` hoef je daarna alleen nog het endpoint op te geven, `"/api/chat"`, en plakt httpx het adres ervoor;
 - de `timeout` geldt voor elk verzoek via deze client.
 
-Een client moet je na gebruik sluiten. Dat gebeurt op regel 66, in deel B.
+Een client moet je na gebruik sluiten. Dat gebeurt op regel 66 (deel B).
 
 ### Regels 53 en 55 — Versturen en uitpakken
 
@@ -276,7 +279,7 @@ Dit ken je uit les 02a:
 - `http.post("/api/chat", json=payload)` stuurt de `POST` naar `http://localhost:11434/api/chat`, met de payload als JSON-body;
 - `response.json()` maakt van de JSON-body een dict, `data`.
 
-Regel 54, `response.raise_for_status()`, en de regels eromheen (`try:` en `except`) zijn de foutafhandeling uit les 02c. Die zijn voor deel B.
+Regel 54, `response.raise_for_status()`, en de regels eromheen (`try:` en `except`) zijn de foutafhandeling uit les 02c. Die komen in deel B en C.
 
 ## 4. Zelf proberen
 
@@ -292,7 +295,13 @@ print(inspect.signature(chat))
 
 `inspect.signature` laat de ingang van een functie zien, precies zoals in regels 30–38. Let op waar de `*` staat in de uitvoer.
 
-Wil je het voorbeeld met `meet()` of `or` uitproberen: kopieer het in een bestand in je scratchpad, of start `uv run python` en typ het regel voor regel in. Afsluiten doe je met `exit()`.
+De voorbeelden met `meet()`, `or` en het logboek staan samen in [`voorbeelden/standaardwaarden.py`](voorbeelden/standaardwaarden.py):
+
+```bash
+uv run python notes/code/voorbeelden/standaardwaarden.py
+```
+
+Wil je zelf variëren: start `uv run python` en typ regel voor regel. Afsluiten doe je met `exit()`.
 
 ## 5. Samenvatting
 
@@ -303,6 +312,11 @@ Wil je het voorbeeld met `meet()` of `or` uitproberen: kopieer het in een bestan
 - **`x or y`:** geeft `x` als die iets bevat, anders `y`. Valkuil: `0` telt als niets.
 - **`None` als standaard voor een dict**, en binnen de functie een nieuw dict maken.
 
-## 6. Wat komt in deel B
+## 6. Wat komt hierna
 
-Regels 52–89: wat er gebeurt als het misgaat (`try`, `except`, `finally`, `raise ... from e` en ons eigen `LLMError`), en hoe het antwoord wordt omgezet naar een `ChatResult` (de `@dataclass`). Dat is precies de foutketen uit les 02c, nu in code.
+De rest van `chat()`, in drie delen:
+- **deel B:** fouten opvangen (`try / except / finally`), en waar een fout naartoe gaat;
+- **deel C:** fouten gooien en vertalen (`raise`, ons eigen `LLMError`, `raise ... from e`);
+- **deel D:** het resultaat (`ChatResult` met `@dataclass`), en daarna `chat()` zelf draaien.
+
+Samen is dat de foutketen uit les 02c, nu in code.

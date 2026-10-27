@@ -74,7 +74,7 @@ Regels:
 
    Daarna wacht je tot ik het gedraaid heb. Kleine logische tussenstappen (een dependency toevoegen, een map aanmaken) hebben geen apart akkoord nodig.
 
-   **Waar de uitleg staat:** de uitleg van een bouwstap schrijf je in een .md-bestand in `notes/code/` (bijv. `notes/code/llm_client-c.md`), in het rustige tempo van de lessen, zodat ik hem in mijn eigen tempo lees en later terugvind. In de chat alleen: welk bestand, hoe ik het draai en wat ik hoor te zien. Code die ik nog niet ken (bijv. eerder geschreven door jou) krijgt eerst een rondleiding, blok voor blok, voordat we hem wijzigen. Nieuwe Python-constructies komen ook op `notes/naslag/python.md`.
+   **Waar de uitleg staat:** de uitleg van een bouwstap schrijf je in een .md-bestand in `notes/code/` (bijv. `notes/code/llm_client-c.md`), in het rustige tempo van de lessen, zodat ik hem in mijn eigen tempo lees en later terugvind. In de chat alleen: welk bestand, hoe ik het draai en wat ik hoor te zien. Code die ik nog niet ken (bijv. eerder geschreven door jou) krijgt eerst een rondleiding, blok voor blok, voordat we hem wijzigen. Nieuwe Python-constructies komen ook op het passende Python-spiekbriefje in `notes/naslag/`. Losse voorbeelden die een les of rondleiding noemt, staan als bestand in `notes/code/voorbeelden/` (niet in de scratchpad: die wordt gewist).
 4. **Draaien en meten.** Ik draai het. Bij een wijziging aan de pipeline meten we vóór en na met dezelfde evaluatieset.
 5. **Commit.** Stel een commitbericht voor en commit na mijn akkoord.
 
