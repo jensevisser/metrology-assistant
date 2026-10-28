@@ -6,8 +6,7 @@ Wat werkt:      repo op GitHub (`vllm-docs-assistant`, branch `sprint-0-ollama-a
                 lessen in `notes/`, rondleidingen in `notes/code/`, voorbeelden in `notes/code/voorbeelden/`, spiekbriefjes in `notes/naslag/`
 Open / wankel:  `raise` en `from e` bleven nog niet goed plakken (uitleg herschreven in rondleiding deel C) ·
                 gat in `chat()`: `ReadError` en `RemoteProtocolError` worden niet opgevangen (dichten in bouwstap 2) ·
-                vacaturecheck bij de start van Project 1 nog niet gedaan (natuurlijk moment: na Sprint 0) ·
-                lokale map heet nog `metrology-assistant`
+                vacaturecheck bij de start van Project 1 nog niet gedaan (natuurlijk moment: na Sprint 0)
 Besluiten:      domein = officiële vLLM-documentatie, vastgezet op één release-tag ·
                 model `qwen3.5:9b` (`4b` voor snel testen); `think: false` meesturen, want thinking staat bij dit model standaard aan ·
                 `httpx` raw-first; in Sprint 0 Ollama's eigen API, aan het eind ook `/v1/chat/completions`, beide via `ChatResult` ·
