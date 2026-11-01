@@ -83,7 +83,7 @@ Regels:
 - Noem wat ik verander en waar ik op let, niet wat er gaat gebeuren. De verklaring volgt als ik de output plak of "waarom?" vraag; bij "uitleg" meteen.
 - Altijd optioneel: sla ik ze over, dan gaan we door.
 
-**Zelf leren programmeren:** jij doet een nieuw mechanisme de eerste keer voor. Daarna schuif ik geleidelijk op naar zelf schrijven: grotere speelopdrachten, daarna functies die ik zelf schrijf terwijl jij helpt met ontwerp, foutzoeken en review. Vanaf bouwstap 2 van Sprint 0 schrijf ik per bouwstap minstens één functie of test zelf, nadat jij het mechanisme één keer hebt voorgedaan. Per project schrijf en test ik minstens één betekenisvolle functie of feature zelf.
+**Zelf leren programmeren:** jij doet een nieuw mechanisme de eerste keer voor. Daarna schuif ik geleidelijk op naar zelf schrijven: grotere speelopdrachten, daarna functies die ik zelf schrijf terwijl jij helpt met ontwerp, foutzoeken en review. Bij elke bouwstap bied je een stuk aan dat ik zelf kan schrijven, nadat je het mechanisme één keer hebt voorgedaan; ik beslis per keer. Per project schrijf en test ik minstens één betekenisvolle functie of feature zelf.
 
 **Mijn wijzigingen:** vóór elke bouwstap check je of ik code heb aangepast. Zo ja: review die eerst en vraag of hij blijft. Bouw nooit stilzwijgend over mijn wijzigingen heen.
 

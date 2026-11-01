@@ -16,13 +16,13 @@ Besluiten:      domein = officiële vLLM-documentatie, vastgezet op één releas
                 `"truncate": false` meesturen naar `/api/chat`, zodat stil inkorten een luide 400 wordt (FM-001) ·
                 vLLM vanaf Sprint 2, na de dunne RAG ·
                 lestempo zoals les 00: hooguit 3–4 nieuwe begrippen per deel; uitleg van bouwstappen in `notes/code/`, niet in de chat ·
-                vanaf bouwstap 2 schrijf ik per bouwstap minstens één functie of test zelf, nadat Claude het mechanisme één keer heeft voorgedaan (CLAUDE.md §4) ·
+                bij elke bouwstap biedt Claude een stuk aan dat ik zelf kan schrijven, nadat hij het mechanisme één keer heeft voorgedaan; ik beslis per keer (CLAUDE.md §4) ·
                 Azure (Project 3) en LangGraph (Project 2) blijven open; besluit na de vacaturecheck eind Project 2 ·
                 geen `Co-Authored-By` in commits
 Volgende stap:  rondleiding deel B, C en D lezen → `chat()` zelf draaien (deel D, sectie 6) → bouwstap 2.
                 Bouwplan Sprint 0:
                 1. `ChatResult` in `chat()` (code staat; zelf draaien)
-                2. `tests/test_llm_client.py`: nep-server (`httpx.MockTransport`) voor de vijf schakels uit les 02c; plus `pythonpath`, de vier bevindingen hierboven, en de eerste test die ik zelf schrijf
+                2. `tests/test_llm_client.py`: nep-server (`httpx.MockTransport`) voor de vijf schakels uit les 02c; plus `pythonpath` en de vier bevindingen hierboven. Claude doet de eerste test voor en biedt de volgende aan
                 3. `eval/baseline.jsonl`: 5 vragen over de vLLM-docs (vaste release-tag), met referentieantwoord en bron
                 4. `src/run_baseline.py`: de meetlat; alle knoppen expliciet; resultaten naar `data/runs/` (keuze `.json` of `.jsonl` in les 04). Ollama-versie, model-ID en git-commit per run vastleggen, want dezelfde seed gaf op 25 oktober 53 en op 1 november 43 tokens
                 5. baseline draaien en beoordelen in `eval/results.md`, plus één sampling-experiment; controlepunt: kent het model vLLM al te goed?
