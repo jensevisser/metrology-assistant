@@ -116,7 +116,19 @@ Dit is precies wat we in de nulmeting van Sprint 0 willen zien: bij welke vragen
 | Zelfverzekerd antwoord met een optie die niet bestaat | knowledge cutoff; het model schrijft plausibel, niet per se waar |
 | Meer tokens dan je zou verwachten uit het aantal woorden | markeringen uit het chat template tellen mee |
 
-**Uitgewerkt voorbeeld.** In Sprint 1 bouwen we een prompt met 10 passages uit de documentatie: ongeveer 4700 tokens. `num_ctx` staat nog op de standaard 4096. Bovenaan staat de instructie: *"Beantwoord de vraag alleen met de passages hieronder."* Ollama kort de rij in, en als juist die instructie of de beste passage wegvalt, antwoordt het model uit zijn eigen, mogelijk verouderde kennis. Het antwoord klinkt net zo overtuigend. Er komt geen foutmelding. Je herkent het aan het aantal tokens dat Ollama als invoer meldt: dat ligt tegen de 4096 aan, in plaats van rond de 4700 die je verwachtte. Dat is een verwachting die we later bewust testen. Daarom slaat de meetlat het aantal tokens erin bij elke aanroep op.
+**Uitgewerkt voorbeeld.** In Sprint 1 bouwen we een prompt met 10 passages uit de documentatie: ongeveer 4700 tokens. `num_ctx` staat nog op de standaard 4096. Bovenaan staat de instructie: *"Beantwoord de vraag alleen met de passages hieronder."* Ollama kort de rij in, en als juist die instructie of de beste passage wegvalt, antwoordt het model uit zijn eigen, mogelijk verouderde kennis. Het antwoord klinkt net zo overtuigend. Er komt geen foutmelding. Je herkent het aan het aantal tokens dat Ollama als invoer meldt: dat is **veel lager dan je verwachtte**.
+
+Dat hebben we gemeten (1 november 2026, `qwen3.5:9b`). Dezelfde prompt, drie keer:
+
+| `num_ctx` | HTTP | tokens erin | antwoord |
+|---|---|---|---|
+| 16384 | 200 | 6968 | volgt de instructie |
+| 4096 | 200 | **2050** | negeert de instructie, verzint iets |
+| 4096 + `"truncate": false` | **400** | — | `request (6968 tokens) exceeds the available context size (4096 tokens), try increasing it` |
+
+Let op de middelste regel: van 6968 tokens bleven er 2050 over, dus ongeveer de helft van het venster, niet "net onder de 4096". Ollama gooide dus niet een stukje weg maar het overgrote deel, inclusief de instructie — en meldde dat met een nette `200 OK`.
+
+De derde regel is de les: **stuur `"truncate": false` mee**, dan wordt stil inkorten een luide `400` met beide getallen erin. Dat is het verschil tussen een meetfout die je ziet en een meetfout die je niet ziet. Zie [FM-001](../FAILURE_MODES.md). Daarom slaat de meetlat het aantal tokens erin bij elke aanroep op.
 
 ## 7. Analogie
 

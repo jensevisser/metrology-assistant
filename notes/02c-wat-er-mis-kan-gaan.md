@@ -46,7 +46,7 @@ Waarom is dat langer, en waarom is dat juist goed? En wat kan er nog meer misgaa
 
 ## 3. Het idee in het kort
 
-Tussen `chat()` en een bruikbaar antwoord zitten vijf schakels, en elke schakel kan op zijn eigen manier falen. `chat()` vangt elke fout op, en geeft in plaats daarvan één eigen soort fout, `LLMError`, met een melding die zegt wat er waarschijnlijk aan de hand is. De originele, technische fout gooit hij niet weg, maar bewaart hij als oorzaak. Bovenaan zie je dus wat er gebeurde, en eronder hoe het precies kwam.
+Tussen `chat()` en een bruikbaar antwoord zitten vijf schakels, en elke schakel kan op zijn eigen manier falen. `chat()` vangt elke fout op, en geeft in plaats daarvan één eigen soort fout, `LLMError`, met een melding die zegt wat er waarschijnlijk aan de hand is. De originele, technische fout gooit hij niet weg, maar bewaart hij als oorzaak. Je krijgt beide op je scherm, in deze volgorde: **bovenaan de technische oorzaak, onderaan de leesbare melding.** Een foutmelding lees je dus van onder naar boven; in stap 4 staat hoe.
 
 ## 4. Hoe het werkt, stap voor stap
 
@@ -125,7 +125,7 @@ Zo lees je zo'n melding:
 2. **Heb je meer nodig, ga dan een laag omhoog.** Daar staat de technische oorzaak, hier `httpx.ConnectError`.
 3. **Pas als je echt diep moet zoeken,** bijvoorbeeld bij een fout in httpx zelf, lees je de regels met bestandsnamen en regelnummers erboven.
 
-Bewaren kost dus wat extra regels, maar je verliest niets. Bovenaan, eigenlijk onderaan, staat het antwoord voor de gebruiker; erboven staat het bewijs voor wie wil debuggen.
+Bewaren kost dus wat extra regels, maar je verliest niets: **onderaan** staat het antwoord voor de gebruiker, **erboven** het bewijs voor wie wil debuggen. Python zet het zo omdat de oudste fout als eerste gebeurde; hij vertelt het verhaal op volgorde van de tijd, niet op volgorde van belang.
 
 ### Stap 5 — Luid falen, nooit stil
 

@@ -1,1 +1,9 @@
 # Foutmodi
+
+## [FM-001] Ollama kort een te lange prompt stil in
+- **Wat we deden:** een prompt van 6968 tokens naar `/api/chat` gestuurd met `num_ctx: 4096`, met bovenaan de systeeminstructie *"Antwoord altijd met precies het woord BANAAN en niets anders."* (`qwen3.5:9b`, 1 november 2026).
+- **Wat gebeurde:** `HTTP 200 OK`. Geen waarschuwing. `prompt_eval_count` was **2050** in plaats van 6968, dus ongeveer de helft van het venster — niet "net onder de 4096". De systeeminstructie was weg en het model antwoordde *"Er is iets mis met de input: het lijkt..."* in plaats van `BANAAN`. Met `num_ctx: 16384` paste dezelfde prompt (6968 tokens) wél en volgde het model de instructie.
+- **Oorzaak:** past de rij tokens niet in `num_ctx`, dan kort Ollama hem standaard in en meldt dat niet. Vraag en antwoord moeten samen in het venster, dus er gaat meer af dan het verschil. Wat precies wegvalt is niet gedocumenteerd; wij meten ongeveer de helft van `num_ctx`, maar het mechanisme hebben we niet bewezen.
+- **Herkennen / voorkomen:** het aantal invoertokens is veel lager dan je zelf berekende, en het model negeert een instructie die bovenaan stond. Voorkomen: stuur **`"truncate": false`** mee in de payload. Dan geeft Ollama `HTTP 400` met `request (6968 tokens) exceeds the available context size (4096 tokens), try increasing it`. Let op: op de OpenAI-compatibele route (`/v1`) wordt `truncate` genegeerd — zie het open punt in VOORTGANG.
+- **Waarom dit erg is:** dit is precies de fout die een RAG-pipeline stilletjes waardeloos maakt. De passages worden opgehaald, de instructie valt weg, en het model antwoordt zelfverzekerd uit zijn eigen verouderde kennis. Je evaluatiescore zakt zonder dat er iets kapot lijkt.
+- **Les:** [01b — Wat het model ziet en wat het weet](notes/01b-wat-het-model-ziet.md), sectie 6.
