@@ -14,6 +14,8 @@
 - [`src/llm_client.py` — deel C](code/llm_client-c.md): fouten gooien en vertalen (`raise`, het eigen fouttype `LLMError`, `raise ... from e`), en één gat in de foutafhandeling.
 - [`src/llm_client.py` — deel D](code/llm_client-d.md): de stopwatch, de inhoud controleren, `ChatResult` met `@dataclass`, en `chat()` zelf draaien.
 
+- [Zijpad: `sys.argv`](code/sys-argv.md): woorden meegeven op de opdrachtregel, waarom `[0]` het bestand zelf is, en wanneer je `argparse` wilt. Geen projectcode; komt uit de voorbeeldbestanden.
+
 De voorbeelden uit de rondleidingen staan als losse bestanden in [`code/voorbeelden/`](code/voorbeelden/).
 
 # Naslag

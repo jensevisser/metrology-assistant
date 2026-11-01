@@ -67,6 +67,39 @@ options or {}     # None → {}, {"temperature": 0.2} → blijft
 "Niets" = `None`, `0`, `""`, `{}`, `[]`, `False`. Niet gebruiken als 0 een geldige waarde is.
 *Zie: `chat()`, regels 48 en 50.*
 
+## Keuze op één regel (A if voorwaarde else B)
+
+```python
+keuze = sys.argv[1] if len(sys.argv) > 1 else "from"
+```
+
+Lees het middenstuk eerst: is de voorwaarde waar → links, anders → rechts. Hetzelfde als:
+
+```python
+if len(sys.argv) > 1:
+    keuze = sys.argv[1]
+else:
+    keuze = "from"
+```
+
+Alleen gebruiken als het op één regel leesbaar blijft; anders gewoon `if / else`.
+*Zie: `../code/voorbeelden/raise_demo.py`, regel 30 · `../code/voorbeelden/hoe_komt_er_iets_in.py`.*
+
+## Wat je op de opdrachtregel typte (sys.argv)
+
+```python
+import sys
+print(sys.argv)
+```
+
+```
+$ uv run python demo.py 1500
+['demo.py', '1500']
+```
+
+`sys.argv[0]` is het bestand zelf, `sys.argv[1]` het eerste woord erachter. Altijd **tekst**, ook bij een getal: `float(sys.argv[1])` als je ermee wilt rekenen. Zonder argumenten heeft de lijst lengte 1, en geeft `sys.argv[1]` een `IndexError`. Meer dan twee knoppen → `argparse`.
+*Zie: uitleg in `../code/sys-argv.md` · `../code/voorbeelden/argumenten.py` · `../code/voorbeelden/hoe_komt_er_iets_in.py`.*
+
 ## Een lijst of dict als standaardwaarde (valkuil)
 
 ```python
